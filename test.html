@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Fetch and Display</title>
+</head>
+<body>
+    <input type="text" id="keyInput" placeholder="Enter Key">
+    <button onclick="fetchAndDisplayData()">Fetch Data</button>
+    <table id="dataTable">
+        <!-- Table content will be dynamically generated here -->
+    </table>
+
+    <script>
+        function fetchAndDisplayData() {
+            var key = document.getElementById("keyInput").value;
+            fetch(`/fetch-data?key=${key}`)
+                .then(response => response.json())
+                .then(data => displayData(data));
+        }
+
+        function displayData(data) {
+            var table = document.getElementById("dataTable");
+            table.innerHTML = ''; // Clear previous data
+
+            // Create table headers
+            var headerRow = table.insertRow();
+            var headers = Object.keys(data[0]);
+            headers.forEach(headerText => {
+                var header = document.createElement("th");
+                header.textContent = headerText;
+                headerRow.appendChild(header);
+            });
+
+            // Populate table rows
+            data.forEach(item => {
+                var row = table.insertRow();
+                headers.forEach(header => {
+                    var cell = row.insertCell();
+                    cell.textContent = item[header];
+                });
+            });
+        }
+    </script>
+</body>
+</html>

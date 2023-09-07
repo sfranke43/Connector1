@@ -1,0 +1,7 @@
+java -Dedc.keystore=transfer-07-provider-push-http/certs/cert.pfx -Dedc.keystore.password=123456 -Dedc.vault=transfer-07-provider-push-http/http-push-provider/provider-vault.properties -Dedc.fs.config=transfer-07-provider-push-http/http-push-provider/provider-configuration.properties -jar transfer-07-provider-push-http/http-push-connector/build/libs/push-connector.jar
+
+curl -H "Content-Type: application/json" -d @payload.json -X POST "http://localhost:19193/management/"
+
+curl -H 'Content-Type: application/json' \-d '{"@context": {"edc": "https://w3id.org/edc/v0.0.1/ns/"}, "@id": "http-pull-provider-dataplane"  "url": "http://localhost:19192/control/transfer","allowedSourceTypes": [ "HttpData" ], "allowedDestTypes": [ "HttpProxy", "HttpData" ], "properties": "https://w3id.org/edc/v0.0.1/ns/publicApiUrl":"http://localhost:19291/public/" }}' \ -X POST "http://localhost:19193/management/v2/dataplanes"
+
+curl -H 'Content-Type: application/json'  -d '{"@context": {"edc": "https://w3id.org/edc/v0.0.1/ns/"}, "@id": "http-pull-provider-dataplane", "url": "http://localhost:19192/control/transfer", "allowedSourceTypes": [ "HttpData" ], "allowedDestTypes": [ "HttpProxy", "HttpData" ], "properties": { "https://w3id.org/edc/v0.0.1/ns/publicApiUrl": "http://localhost:19291/public/" }}' -X POST "http://localhost:19193/management/v2/dataplanes"

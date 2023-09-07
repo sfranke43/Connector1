@@ -1,0 +1,83 @@
+curl -H 'Content-Type: application/json' \
+     -d '{
+           "@context": {
+             "edc": "https://w3id.org/edc/v0.0.1/ns/"
+           },
+           "@id": "http-pull-provider-dataplane",
+           "url": "http://localhost:19192/control/transfer",
+           "allowedSourceTypes": [ "HttpData" ],
+           "allowedDestTypes": [ "HttpProxy", "HttpData" ],
+           "properties": {
+                "https://w3id.org/edc/v0.0.1/ns/publicApiUrl": "http://localhost:19291/public/"
+            }
+         }' \
+     -X POST "http://localhost:19193/management/v2/dataplanes"
+
+
+
+curl -d "{
+           "@context": {
+             "edc": "https://w3id.org/edc/v0.0.1/ns/"
+           },
+           "asset": {
+             "@id": "assetId",
+             "properties": {
+               "name": "product description",
+               "contenttype": "application/json"
+             }
+           },
+           "dataAddress": {
+             "name": "Test asset",
+             "baseUrl": "https://jsonplaceholder.typicode.com/users",
+             "type": "HttpData"
+           }
+         }" -H 'content-type: application/json' http://localhost:19193/management/v2/assets \
+         -s | jq
+
+
+
+
+curl -d "{
+              "@context":{
+                     "edc": "https://w3id.prg/edc/v0.0.1/ns/",
+                     "odrl":"http://www.w3.org/ns/odr/2/"
+                     },
+                "@id": "aPolicy",
+                  "policy":{
+                     "@type": "set",
+                     "odrl:permission":[],
+                     "odrl:prohibition":[],
+                     "odrl:obligation": []
+                 }
+               }" -H 'content-type: application/json' http:localhost:19193/managemant/v2/policydefinitions       -s | jq
+
+
+
+
+
+
+curl -d "{
+        "@context": {
+        "edc": "https://w3id.org/edc/v0.0.1/ns/"
+        },
+        "@id": "1",
+        "accessPolicyId": "aPolicy",
+        "contractPolicyId": "aPolicy",
+        "assetsSelector": []
+        }" -H 'content-type: application/json'  https://localhost:19193/management/v2/contractdefinitions  -s | jq
+
+
+
+
+curl -d "{
+              "@context": {
+                 "edc": "https://w3id.org/edc/v0.0.1/ns/"
+              },
+              "@type": "contractdefinition",
+              "offset": 5,
+              "limit": 10,
+              "sortOrder": "DESC",
+              "sortField": "fieldName",
+              "filterExpression":[]
+             }"
+ -H 'content-type: application/json'   http://localhost:19193/management/v3/assets/request         -s | jq
