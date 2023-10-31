@@ -107,6 +107,9 @@ edc-data-plane-selector-core = { module = "org.eclipse.edc:data-plane-selector-c
 edc-data-plane-api = { module = "org.eclipse.edc:data-plane-api", version.ref = "edc" }
 edc-data-plane-core = { module = "org.eclipse.edc:data-plane-core", version.ref = "edc" }
 edc-vault-filesystem = { module = "org.eclipse.edc:vault-filesystem", version.ref = "edc" }
+edc-util = { module = "org.eclipse.edc:util", version.ref = "edc" }
+edc-spi = { module = "org.eclipse.edc:spi", version.ref = "edc" }
+
 
 # other technology extensions
 apache-commons-pool = { module = "org.apache.commons:commons-pool2", version.ref = "apacheCommonsPool2" }

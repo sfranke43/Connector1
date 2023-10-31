@@ -25,6 +25,8 @@ import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.types.domain.HttpDataAddress;
 import org.eclipse.edc.spi.types.domain.transfer.DataFlowRequest;
 import org.jetbrains.annotations.NotNull;
+import org.eclipse.edc.connector.transfer.spi.store.TransferProcessStore;
+import org.eclipse.edc.connector.transfer.spi.types.TransferProcess;
 
 import static org.eclipse.edc.spi.types.domain.HttpDataAddress.HTTP_DATA;
 
@@ -37,12 +39,15 @@ public class HttpDataSourceFactory implements DataSourceFactory {
     private final HttpRequestParamsProvider requestParamsProvider;
     private final Monitor monitor;
     private final HttpRequestFactory requestFactory;
+	//new for thesis
+	private final TransferProcessStore transferProcessStore;
 
-    public HttpDataSourceFactory(EdcHttpClient httpClient, HttpRequestParamsProvider requestParamsProvider, Monitor monitor, HttpRequestFactory requestFactory) {
+    public HttpDataSourceFactory(EdcHttpClient httpClient, HttpRequestParamsProvider requestParamsProvider, Monitor monitor, HttpRequestFactory requestFactory, TransferProcessStore transferProcessStore) {
         this.httpClient = httpClient;
         this.requestParamsProvider = requestParamsProvider;
         this.monitor = monitor;
         this.requestFactory = requestFactory;
+		this.transferProcessStore = transferProcessStore;
     }
 
     @Override
@@ -67,9 +72,16 @@ public class HttpDataSourceFactory implements DataSourceFactory {
 
     @Override
     public DataSource createSource(DataFlowRequest request) {
+		System.out.println("creating data source");
+		System.out.println(request.getProcessId());
+		TransferProcess transferProcess = this.transferProcessStore.findById(request.getId());
+		TransferProcess transferProcess1 = this.transferProcessStore.findForCorrelationId(request.getProcessId());
         var dataAddress = HttpDataAddress.Builder.newInstance()
                 .copyFrom(request.getSourceDataAddress())
                 .build();
+        String processId = request.getProcessId();
+
+        //ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         return HttpDataSource.Builder.newInstance()
                 .httpClient(httpClient)
                 .monitor(monitor)

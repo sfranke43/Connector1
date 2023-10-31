@@ -1,4 +1,8 @@
+gradlew transfer-07-provider-push-http:http-push-connector:build
+
 java -Dedc.keystore=transfer-07-provider-push-http/certs/cert.pfx -Dedc.keystore.password=123456 -Dedc.vault=transfer-07-provider-push-http/http-push-provider/provider-vault.properties -Dedc.fs.config=transfer-07-provider-push-http/http-push-provider/provider-configuration.properties -jar transfer-07-provider-push-http/http-push-connector/build/libs/push-connector.jar
+
+java -Dedc.keystore=transfer-07-provider-push-http/certs/cert.pfx -Dedc.keystore.password=123456 -Dedc.vault=transfer-07-provider-push-http/http-push-consumer/consumer-vault.properties -Dedc.fs.config=transfer-07-provider-push-http/http-push-consumer/consumer-configuration.properties -jar transfer-07-provider-push-http/http-push-connector/build/libs/push-connector.jar
 
 curl -H "Content-Type: application/json" -d @payload.json -X POST "http://localhost:19193/management/"
 

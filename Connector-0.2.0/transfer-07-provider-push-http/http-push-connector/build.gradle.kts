@@ -40,8 +40,14 @@ dependencies {
 	
 	implementation(project(":extensions:data-plane:data-plane-api"))
 	implementation(project(":core:data-plane:data-plane-core"))
+	
                 implementation(libs.edc.management.api)
 	implementation(libs.edc.jsonld)
+	
+	
+	//neue ZEile!
+	implementation(project(":spi:control-plane:transfer-spi"))
+	//implementation(project(":spi:common"))
 
 
 

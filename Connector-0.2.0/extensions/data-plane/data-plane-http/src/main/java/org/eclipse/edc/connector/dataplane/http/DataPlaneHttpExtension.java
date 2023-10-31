@@ -31,6 +31,7 @@ import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.TypeManager;
+import org.eclipse.edc.connector.transfer.spi.store.TransferProcessStore;
 
 /**
  * Provides support for reading data from an HTTP endpoint and sending data to an HTTP endpoint.
@@ -58,6 +59,10 @@ public class DataPlaneHttpExtension implements ServiceExtension {
 
     @Inject
     private TypeManager typeManager;
+	
+	//new for thesis
+	@Inject
+    private TransferProcessStore transferProcessStore;
 
     @Override
     public String name() {
@@ -74,7 +79,7 @@ public class DataPlaneHttpExtension implements ServiceExtension {
 
         var httpRequestFactory = new HttpRequestFactory();
 
-        var sourceFactory = new HttpDataSourceFactory(httpClient, paramsProvider, monitor, httpRequestFactory);
+        var sourceFactory = new HttpDataSourceFactory(httpClient, paramsProvider, monitor, httpRequestFactory, transferProcessStore);
         pipelineService.registerFactory(sourceFactory);
 
         var sinkFactory = new HttpDataSinkFactory(httpClient, executorContainer.getExecutorService(), sinkPartitionSize, monitor, paramsProvider, httpRequestFactory);

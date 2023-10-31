@@ -201,9 +201,12 @@ include(":spi:data-plane:data-plane-http-spi")
 
 include(":spi:data-plane-selector:data-plane-selector-spi")
 
+
 //transfer
 include("transfer-07-provider-push-http:http-push-connector")
+include("transfer-07-provider-push-http:util:http-request-logger")
 include(":extensions:data-plane:data-plane-http")
+
 
 // modules for system tests ------------------------------------------------------------------------
 include(":system-tests:e2e-transfer-test:backend-service")

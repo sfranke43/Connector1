@@ -69,15 +69,26 @@ curl -d "{
 
 
 
-curl -d "{
-              "@context": {
-                 "edc": "https://w3id.org/edc/v0.0.1/ns/"
-              },
-              "@type": "contractdefinition",
-              "offset": 5,
-              "limit": 10,
-              "sortOrder": "DESC",
-              "sortField": "fieldName",
-              "filterExpression":[]
-             }"
- -H 'content-type: application/json'   http://localhost:19193/management/v3/assets/request         -s | jq
+curl -d '{
+  "@context": {
+    "edc": "https://w3id.org/edc/v0.0.1/ns/"
+  },
+  "@type": "contractdefinition",
+  "offset": 5,
+  "limit": 10,
+  "sortOrder": "DESC",
+  "sortField": "fieldName",
+  "filterExpression": []
+}' -H 'content-type: application/json' http://localhost:19193/management/v3/assets/request -s | jq
+
+
+curl -d '{
+           "@context": {
+             "edc": "https://w3id.org/edc/v0.0.1/ns/"
+           },
+           "@id": "1",
+           "accessPolicyId": "aPolicy",
+           "contractPolicyId": "aPolicy",
+           "assetsSelector": []
+         }' -H 'content-type: application/json' http://localhost:19193/management/v2/contractdefinitions \
+         -s | jq
